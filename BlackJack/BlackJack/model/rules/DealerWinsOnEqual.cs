@@ -6,7 +6,6 @@ namespace BlackJack.model.rules
 {
     class DealerWinsOnEqual : IWinnerStrategy
     {
-        // private const int g_maxScore = 21;
         public bool IsWinner(int g_maxScore, model.Player a_dealer, model.Player a_player)
         {
 

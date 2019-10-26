@@ -34,14 +34,20 @@ namespace BlackJack.model
             return false;
         }
 
+        private void GiveCard(Player a_player)
+        {
+            Card c;
+            c = m_deck.GetCard();
+            c.Show(true);
+            a_player.DealCard(c);
+        }
+
         public bool Hit(Player a_player)
         {
             if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver())
             {
-                Card c;
-                c = m_deck.GetCard();
-                c.Show(true);
-                a_player.DealCard(c);
+                // 1 ställe
+                GiveCard(a_player);
 
                 return true;
             }
@@ -55,10 +61,8 @@ namespace BlackJack.model
                 this.ShowHand();
                 while (m_hitRule.DoHit(this))
                 {
-                    Card c;
-                    c = m_deck.GetCard();
-                    c.Show(true);
-                    this.DealCard(c);
+                    // 2 ställe
+                    GiveCard(this);
                     return true;
                 }
             }
@@ -67,15 +71,12 @@ namespace BlackJack.model
 
         public bool IsDealerWinner(Player a_player)
         {
-            // om spelarens poäng är större än 21 return true = dealer vinner
-            // OBS här har jag ändrat!!             
-            // return sant eller falskt: dealerns poäng är större än eller lika med spelarens poäng
-            return m_winnerRule.IsWinner(g_maxScore, this, a_player);// CalcScore() >= a_player.CalcScore();
+            return m_winnerRule.IsWinner(g_maxScore, this, a_player);
         }
 
         public bool IsGameOver()
         {
-            if (m_deck != null && /*CalcScore() >= g_hitLimit*/ m_hitRule.DoHit(this) != true)
+            if (m_deck != null && m_hitRule.DoHit(this) != true)
             {
                 return true;
             }

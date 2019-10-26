@@ -7,7 +7,6 @@ namespace BlackJack.model.rules
 {
     class RulesFactory
     {
-        // TODO här väljs det vilka regler som spelas med
         public IHitStrategy GetHitRule()
         {
             // return new BasicHitStrategy();
