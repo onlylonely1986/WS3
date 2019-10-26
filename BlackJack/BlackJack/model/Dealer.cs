@@ -29,16 +29,16 @@ namespace BlackJack.model
                 m_deck = new Deck();
                 ClearHand();
                 a_player.ClearHand();
-                return m_newGameRule.NewGame(m_deck, this, a_player);
+                return m_newGameRule.NewGame(this, a_player);
             }
             return false;
         }
 
-        private void GiveCard(Player a_player)
+        public void GiveCard(Player a_player, bool ShowCard)
         {
             Card c;
             c = m_deck.GetCard();
-            c.Show(true);
+            c.Show(ShowCard);
             a_player.DealCard(c);
         }
 
@@ -46,9 +46,7 @@ namespace BlackJack.model
         {
             if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver())
             {
-                // 1 ställe
-                GiveCard(a_player);
-
+                GiveCard(a_player, true);
                 return true;
             }
             return false;
@@ -61,9 +59,7 @@ namespace BlackJack.model
                 this.ShowHand();
                 while (m_hitRule.DoHit(this))
                 {
-                    // 2 ställe
-                    GiveCard(this);
-                    return true;
+                    GiveCard(this, true);
                 }
             }
             return false;
