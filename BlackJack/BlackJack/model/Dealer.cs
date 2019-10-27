@@ -14,12 +14,20 @@ namespace BlackJack.model
         private rules.IHitStrategy m_hitRule;
         private rules.IWinnerStrategy m_winnerRule;
 
+        private List<rules.IBlackJackObserver> m_observers;
+
 
         public Dealer(rules.RulesFactory a_rulesFactory)
         {
             m_newGameRule = a_rulesFactory.GetNewGameRule();
             m_hitRule = a_rulesFactory.GetHitRule();
             m_winnerRule = a_rulesFactory.GetWinnerRule();
+            m_observers = new List<rules.IBlackJackObserver>();
+        }
+
+        public void AddSubscriber(rules.IBlackJackObserver a_sub)
+        {
+            m_observers.Add(a_sub);
         }
 
         public bool NewGame(Player a_player)
@@ -40,6 +48,10 @@ namespace BlackJack.model
             c = m_deck.GetCard();
             c.Show(ShowCard);
             a_player.DealCard(c);
+            foreach(rules.IBlackJackObserver o in m_observers)
+            {
+                o.DealCard(c);
+            }
         }
 
         public bool Hit(Player a_player)

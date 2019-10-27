@@ -2,26 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BlackJack.controller
 {
-    class PlayGame
+    class PlayGame : model.rules.IBlackJackObserver
     {
-        public bool Play(model.Game a_game, view.IView a_view)
+        private view.IView m_view;
+        public PlayGame (view.IView a_view)
         {
-            a_view.DisplayWelcomeMessage();
-
-            a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
-            a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
+            m_view = a_view;
+        }
+        public bool Play(model.Game a_game) 
+        {
+            a_game.AddSubscriber(this);
+            m_view.DisplayWelcomeMessage();
+            m_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
+            m_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
 
             if (a_game.IsGameOver())
             {
-                a_view.DisplayGameOver(a_game.IsDealerWinner());
+                m_view.DisplayGameOver(a_game.IsDealerWinner());
             }
 
             BlackJack.view.MenuEvent.Event e;
 
-            e = a_view.GetEvent();
+            e = m_view.GetEvent();
             if (e == BlackJack.view.MenuEvent.Event.Quit)
             {
                 return false;
@@ -41,6 +47,13 @@ namespace BlackJack.controller
             }
 
             return true;
+        }
+
+
+        public void DealCard(model.Card c)
+        {
+            m_view.DisplayCardValue(c);
+            System.Threading.Thread.Sleep(1000);
         }
     }
 }

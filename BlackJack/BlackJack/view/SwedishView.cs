@@ -30,6 +30,12 @@ namespace BlackJack.view
                 System.Console.WriteLine("{0} {1}", colors[(int)a_card.GetColor()], values[(int)a_card.GetValue()]);
             }
         }
+
+        public void DisplayCardValue(model.Card a_card)
+        {
+            System.Console.WriteLine("{0} of {1}", a_card.GetValue(), a_card.GetColor());
+        }
+
         public void DisplayPlayerHand(IEnumerable<model.Card> a_hand, int a_score)
         {
             DisplayHand("Spelare", a_hand, a_score);

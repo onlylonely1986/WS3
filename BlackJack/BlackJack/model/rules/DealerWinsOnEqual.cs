@@ -13,11 +13,11 @@ namespace BlackJack.model.rules
             {
                 return true;
             }
-            
             else if (a_dealer.CalcScore() > g_maxScore)
             {
                 return false;
-            }else if (a_dealer.CalcScore() >= a_player.CalcScore())
+            }
+            else if (a_dealer.CalcScore() >= a_player.CalcScore())
             {
                 return true;
             }
