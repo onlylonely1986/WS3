@@ -7,6 +7,10 @@ namespace BlackJack.view
 {
     class SimpleView : IView
     {
+        private char play = 'p';
+        private char hit = 'h';
+        private char stand = 's';
+        private char quit = 'q';
 
         public void DisplayWelcomeMessage()
         {
@@ -40,7 +44,7 @@ namespace BlackJack.view
             System.Console.WriteLine("{0} Has: ", a_name);
             foreach (model.Card c in a_hand)
             {
-                DisplayCard(c);
+                DisplayCardValue(c);
             }
             System.Console.WriteLine("Score: {0}", a_score);
             System.Console.WriteLine("");
@@ -63,19 +67,19 @@ namespace BlackJack.view
         public MenuEvent.Event GetEvent()
         {
             char c = System.Console.ReadKey().KeyChar;
-            if (c == 'q')
+            if (c == this.quit)
             {
                 return MenuEvent.Event.Quit;
             }
-            if (c == 'h')
+            if (c == this.hit)
             {
                 return MenuEvent.Event.Hit;
             }
-            if (c == 'p')
+            if (c == this.play)
             {
                 return MenuEvent.Event.Start;
             }
-            if (c == 's')
+            if (c == this.stand)
             {
                 return MenuEvent.Event.Stand;
             }

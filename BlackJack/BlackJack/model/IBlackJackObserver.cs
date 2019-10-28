@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlackJack.model.rules
+namespace BlackJack.model
 {
     interface IBlackJackObserver
     {
-        void DealCard(Card c);
+        void DealtCard();
     }
 }

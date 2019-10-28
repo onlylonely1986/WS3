@@ -6,23 +6,22 @@ using System.Threading.Tasks;
 
 namespace BlackJack.controller
 {
-    class PlayGame : model.rules.IBlackJackObserver
+    class PlayGame : model.IBlackJackObserver
     {
         private view.IView m_view;
-        public PlayGame (view.IView a_view)
+        private model.Game m_game;
+        public PlayGame (view.IView a_view, model.Game a_game)
         {
             m_view = a_view;
-        }
-        public bool Play(model.Game a_game) 
-        {
+            m_game = a_game;
             a_game.AddSubscriber(this);
-            m_view.DisplayWelcomeMessage();
-            m_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
-            m_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
-
-            if (a_game.IsGameOver())
+        }
+        public bool Play() 
+        {
+            PrintView();
+            if (m_game.IsGameOver())
             {
-                m_view.DisplayGameOver(a_game.IsDealerWinner());
+                m_view.DisplayGameOver(m_game.IsDealerWinner());
             }
 
             BlackJack.view.MenuEvent.Event e;
@@ -34,26 +33,34 @@ namespace BlackJack.controller
             }
             if (e == BlackJack.view.MenuEvent.Event.Start)
             {
-                a_game.NewGame();
+                m_game.NewGame();
 
             }
             if (e == BlackJack.view.MenuEvent.Event.Hit)
             {
-                a_game.Hit();
+                m_game.Hit();
             }
             if (e == BlackJack.view.MenuEvent.Event.Stand)
             {
-                a_game.Stand();
+                m_game.Stand();
             }
 
             return true;
         }
 
 
-        public void DealCard(model.Card c)
+        public void DealtCard()
         {
-            m_view.DisplayCardValue(c);
+            PrintView();
+            // fix a metod in view for that
             System.Threading.Thread.Sleep(1000);
+        }
+
+        public void PrintView()
+        {
+            m_view.DisplayWelcomeMessage();
+            m_view.DisplayDealerHand(m_game.GetDealerHand(), m_game.GetDealerScore());
+            m_view.DisplayPlayerHand(m_game.GetPlayerHand(), m_game.GetPlayerScore());
         }
     }
 }
