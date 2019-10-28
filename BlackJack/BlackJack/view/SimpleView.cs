@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace BlackJack.view
 {
+    
     class SimpleView : IView
     {
+        private int milliSekValue = 1500;
         private char play = 'p';
         private char hit = 'h';
         private char stand = 's';
@@ -19,12 +20,12 @@ namespace BlackJack.view
             System.Console.WriteLine("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
         }
 
-        public void DisplayCard(model.Card a_card)
+        public void MakePause()
         {
-            // System.Console.WriteLine("{0} of {1}", a_card.GetValue(), a_card.GetColor());
+            System.Threading.Thread.Sleep(milliSekValue);
         }
 
-        public void DisplayCardValue(model.Card a_card)
+        public void DisplayCard(model.Card a_card)
         {
             System.Console.WriteLine("{0} of {1}", a_card.GetValue(), a_card.GetColor());
         }
@@ -44,7 +45,7 @@ namespace BlackJack.view
             System.Console.WriteLine("{0} Has: ", a_name);
             foreach (model.Card c in a_hand)
             {
-                DisplayCardValue(c);
+                DisplayCard(c);
             }
             System.Console.WriteLine("Score: {0}", a_score);
             System.Console.WriteLine("");

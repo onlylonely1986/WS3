@@ -7,6 +7,12 @@ namespace BlackJack.view
 {
     class SwedishView : IView
     {
+        private int milliSekValue = 1500;
+        private char play = 'p';
+        private char hit = 'h';
+        private char stand = 's';
+        private char quit = 'q';
+
         public void DisplayWelcomeMessage()
         {
             System.Console.Clear();
@@ -31,9 +37,9 @@ namespace BlackJack.view
             }
         }
 
-        public void DisplayCardValue(model.Card a_card)
+        public void MakePause()
         {
-            System.Console.WriteLine("{0} of {1}", a_card.GetValue(), a_card.GetColor());
+            System.Threading.Thread.Sleep(milliSekValue);
         }
 
         public void DisplayPlayerHand(IEnumerable<model.Card> a_hand, int a_score)
@@ -71,23 +77,22 @@ namespace BlackJack.view
         public MenuEvent.Event GetEvent()
         {
             char c = System.Console.ReadKey().KeyChar;
-            if (c == 'q')
+            if (c == this.quit)
             {
                 return MenuEvent.Event.Quit;
             }
-            if (c == 'h')
+            if (c == this.hit)
             {
                 return MenuEvent.Event.Hit;
             }
-            if (c == 'p')
+            if (c == this.play)
             {
                 return MenuEvent.Event.Start;
             }
-            if (c == 's')
+            if (c == this.stand)
             {
                 return MenuEvent.Event.Stand;
             }
-
             return MenuEvent.Event.None;
         }
     }

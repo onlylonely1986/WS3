@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BlackJack.controller
 {
@@ -53,7 +53,7 @@ namespace BlackJack.controller
         {
             PrintView();
             // fix a metod in view for that
-            System.Threading.Thread.Sleep(1000);
+            m_view.MakePause();
         }
 
         public void PrintView()

@@ -59,5 +59,34 @@ namespace BlackJack.model
 
             return score;
         }
+
+        public bool CalcScoreSoft17()
+        {
+            int[] cardScores = new int[(int)model.Card.Value.Count]
+                {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
+            int score = 0;
+
+            foreach (Card c in GetHand())
+            {
+                if (c.GetValue() != Card.Value.Hidden)
+                {
+                    score += cardScores[(int)c.GetValue()];
+                }
+            }
+
+            if (score == 17)
+            {
+                foreach (Card c in GetHand())
+                {
+                    if (c.GetValue() == Card.Value.Ace)
+                    {
+                        score -= 10;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

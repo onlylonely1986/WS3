@@ -17,11 +17,10 @@ namespace BlackJack.model.rules
                 {
                     if (c.GetValue() == Card.Value.Ace)
                     {
-                        // if (c.GetValue() == 1)
-                        // {
-
-                        // }
-                        return true;
+                        if(a_dealer.CalcScoreSoft17())
+                        {
+                            return true;
+                        }
                     }
                 }
             }
