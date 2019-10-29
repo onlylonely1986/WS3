@@ -7,20 +7,17 @@ namespace BlackJack.model.rules
 {
     class Soft17HitStrategy : IHitStrategy
     {
-        private const int g_hitLimit = 17;
-
+       private const int g_hitLimit = 17;
         public bool DoHit(model.Player a_dealer)
         {
-            if (a_dealer.CalcScore() == g_hitLimit)
+            int score = a_dealer.CalcScore(false);
+            if (score == g_hitLimit)
             {
                 foreach (Card c in a_dealer.GetHand())
                 {
                     if (c.GetValue() == Card.Value.Ace)
                     {
-                        if(a_dealer.CalcScoreSoft17())
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
